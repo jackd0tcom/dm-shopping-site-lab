@@ -1,33 +1,32 @@
 {% extends 'base.html.njk' %}
-
 {% block body %}
-<table class="table table-striped mt-3">
-  <thead>
-    <tr>
-      <th>Animal Name</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Bear</td>
-      <td>2</td>
-      <td>$15.00</td>
-      <td>$30.00</td>
-    </tr>
-    <tr>
-      <td>Rabbit</td>
-      <td>1</td>
-      <td>$20.00</td>
-      <td>$20.00</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3>Total: $50.00</h3>
-
-<a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
-
+  {% if  username %}
+    <h1>{{ username }}'s Cart</h1>
+  {% endif %}
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Animal Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for animal in cartArr %}
+        <tr>
+          <td>{{ animal.name }}</td>
+          <td>
+            <a href="/add/{{ animal.name }}" class='add'>+</a>
+            {{ animal.quantity }}
+            <a href="/delete" class='subtract'>-</a>
+          </td>
+          <td>${{ animal.price }}.00</td>
+          <td>${{ animal.totalCost }}.00</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h3>Total: ${{ total }}.00</h3>
+  <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 {% endblock %}
